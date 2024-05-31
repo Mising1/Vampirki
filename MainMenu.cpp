@@ -4,7 +4,7 @@ using namespace sf;
 
 MainMenu::MainMenu(int wX, int wY)
 {
-    if (!font.loadFromFile("./murderFont2.otf"))
+    if (!font.loadFromFile("./font/murderFont2.otf"))
     {
         std::cout << "Nie udalo sie wczytac czcionki" << std::endl;
     }

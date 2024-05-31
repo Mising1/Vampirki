@@ -176,6 +176,10 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="font\lakes.ttf" />
+    <Content Include="font\murderFont2.otf" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

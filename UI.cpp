@@ -27,7 +27,7 @@ void UI::GunReload()
 
 void UI::Level()
 {
-    font.loadFromFile("./lakes.ttf");
+    font.loadFromFile("./font/lakes.ttf");
     text.setFont(font);
     text.setString("Level: " + to_string(player.level));
     text.setCharacterSize(24);
