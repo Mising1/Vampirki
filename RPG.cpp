@@ -60,10 +60,10 @@ int main(int argc, char* argv[])
             player.UpdateProjectiles(enemy1);
             
 
-            for (int i = 0; i < enemy1.size(); i++)
+            for (auto& enemy : enemy1)
             {
-                enemy1[i].EnemyMove(player.tail.getPosition());
-                enemy1[i].EnemyDraw(window);
+                enemy.EnemyMove(player.tail.getPosition());
+                enemy.EnemyDraw(window);
             }
             window.setView(view);
             player.PlayerMove();
