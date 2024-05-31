@@ -180,6 +180,9 @@
     <Content Include="font\lakes.ttf" />
     <Content Include="font\murderFont2.otf" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="audio\" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
