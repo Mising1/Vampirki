@@ -7,12 +7,14 @@ class Enemy;
 
 Player::Player()
 {
-    tail.setRadius(radius);
-    tail.setFillColor(Color::Green);
-    tail.setPosition(x, y);
-    gun.setSize(Vector2f(width, height));
-    gun.setFillColor(Color::White);
-    gun.setPosition(x + radius, y + radius);
+    playerTextureR.loadFromFile("./graphics/ziomekR.png");
+    playerTextureL.loadFromFile("./graphics/ziomekL.png");
+    bowTexture.loadFromFile("./graphics/lukRem.png");
+    playerSprite.scale(0.5f, 0.5f);
+    playerSprite.setTexture(playerTextureR);
+    bow.setScale(0.5f, 0.5f);
+    playerSprite.setPosition(x, y);
+    bow.setPosition(playerSprite.getPosition().x + 45, playerSprite.getPosition().y + 25);
 }
 
 void Player::PlayerMove()
@@ -22,46 +24,47 @@ void Player::PlayerMove()
     if (Keyboard::isKeyPressed(Keyboard::W))
     {
         movementPlayer.y -= speedPlayer;
-        direction = 'w';
+        
     }
     if (Keyboard::isKeyPressed(Keyboard::S))
     {
         movementPlayer.y += speedPlayer;
-        direction = 's';
+        
     }
     if (Keyboard::isKeyPressed(Keyboard::A))
     {
+        bow.setRotation(180);
         movementPlayer.x -= speedPlayer;
         direction = 'a';
     }
     if (Keyboard::isKeyPressed(Keyboard::D))
     {
         movementPlayer.x += speedPlayer;
+        bow.setRotation(0);
         direction = 'd';
     }
-
     if (Keyboard::isKeyPressed(Keyboard::Up))
     {
-        gun.setRotation(-90);
+        bow.setRotation(-90);
         direction = 'w';
     }
     if (Keyboard::isKeyPressed(Keyboard::Down))
     {
-        gun.setRotation(90);
+        bow.setRotation(90);
         direction = 's';
     }
     if (Keyboard::isKeyPressed(Keyboard::Left))
     {
-        gun.setRotation(180);
+        bow.setRotation(180);
         direction = 'a';
     }
     if (Keyboard::isKeyPressed(Keyboard::Right))
     {
-        gun.setRotation(0);
+        bow.setRotation(0);
         direction = 'd';
     }
-    tail.move(movementPlayer);
-    gun.move(movementPlayer);
+    playerSprite.move(movementPlayer);
+    bow.move(movementPlayer);
 }
 
 void Player::PlayerAttack(float elapsed, Clock& c)
@@ -69,21 +72,21 @@ void Player::PlayerAttack(float elapsed, Clock& c)
     if ((Keyboard::isKeyPressed(Keyboard::Up) || Keyboard::isKeyPressed(Keyboard::Down) ||
         Keyboard::isKeyPressed(Keyboard::Right) || Keyboard::isKeyPressed(Keyboard::Left)) && elapsed > attackSpeed)
     {
-        float projectileX = gun.getPosition().x;
-        float projectileY = gun.getPosition().y;
+        float projectileX = bow.getPosition().x;
+        float projectileY = bow.getPosition().y;
         switch (direction)
         {
         case 'w':
-            projectileX += 7;
+            projectileX += 18;
             break;
         case 's':
-            projectileX -= 12;
+            projectileX -= 25;
             break;
         case 'a':
-            projectileY -= 12;
+            projectileY -= 25;
             break;
         case 'd':
-            projectileY += 7;
+            projectileY += 18;
             break;
         default: break;
         }
@@ -106,10 +109,47 @@ void Player::PlayerDraw(RenderWindow& window, View& view)
         listProjectile[i].Update();
         listProjectile[i].Draw(window);
     }
+    if (direction == 'w') //up arrow
+    {
+        if (playerSprite.getTexture() == &playerTextureR)
+        {
+            bow.setPosition(playerSprite.getPosition().x + 28, playerSprite.getPosition().y + 50);
+        }
+        else
+        {
+            bow.setPosition(playerSprite.getPosition().x-12, playerSprite.getPosition().y + 50);
+            
+        }
+        
+    }
+    if (direction == 's') //down arrow
+    {
+        if (playerSprite.getTexture() == &playerTextureR)
+        {
+        bow.setPosition(playerSprite.getPosition().x + 70, playerSprite.getPosition().y + 40);
+        }
+        else
+        {
+            bow.setPosition(playerSprite.getPosition().x+28, playerSprite.getPosition().y + 40);
 
-    window.draw(gun);
-    view.setCenter(tail.getPosition().x + 25, tail.getPosition().y + 25);
-    window.draw(tail);
+        }
+        
+    }
+    if (direction == 'a') //left arrow
+    {
+        playerSprite.setTexture(playerTextureL);
+        bow.setPosition(playerSprite.getPosition().x + 12, playerSprite.getPosition().y + 65);
+    }
+    if (direction == 'd') //right arrow
+    {
+        bow.setPosition(playerSprite.getPosition().x + 45, playerSprite.getPosition().y + 25);
+        playerSprite.setTexture(playerTextureR);
+    }
+    
+    bow.setTexture(bowTexture);
+    window.draw(playerSprite);
+    window.draw(bow);
+    view.setCenter(playerSprite.getPosition().x + 25, playerSprite.getPosition().y + 25);
 }
 
 void Player::UpdateProjectiles(vector<Enemy>& enemies)

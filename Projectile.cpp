@@ -4,7 +4,6 @@ Projectile::Projectile()
 {
 }
 
-
 Projectile::Projectile(float posX, float posY, char direction)
 {
     x = posX;
@@ -48,7 +47,6 @@ void Projectile::Update()
     this->x = projectile.getPosition().x;
     this->y = projectile.getPosition().y;
     projectile.move(movement);
-    
 }
 
 bool Projectile::CheckDistance()

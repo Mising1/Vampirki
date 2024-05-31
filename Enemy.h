@@ -5,12 +5,15 @@ using namespace sf;
 
 class Enemy
 {
+private:
+    Sprite enemy;
+    Texture enemyTexture;
+    RectangleShape enemyHitbox;
 public:
     float x;
     float y;
-    float radius = 20;
+    float radius = 58;
     float speed = 0.03f;
-    CircleShape enemy;
 
     Enemy(View view);
     void EnemyMove(Vector2f target); 

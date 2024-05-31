@@ -24,7 +24,6 @@ void UI::GunReload()
     gunReloadBackground.setFillColor(Color::Green);
 }
 
-
 void UI::Level()
 {
     font.loadFromFile("./font/lakes.ttf");

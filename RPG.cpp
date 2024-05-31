@@ -12,7 +12,7 @@ int main(int argc, char* argv[])
 {
     vector<string> songPaths = {"./audio/NeonAbyss.mp3", "./audio/FutureFrenzy.mp3"};
     AudioSongs audioSongs(songPaths);
-
+    
     const int width = 1600;
     const int height = 900;
     vector<Enemy> enemy1;
@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
     UI ui(player);
     Clock c;
     Clock c2;
-
+    
     bool isMenu = true;
     float elapsed, elapsed2;
     
@@ -32,8 +32,7 @@ int main(int argc, char* argv[])
         audioSongs.Update();
         elapsed = c.getElapsedTime().asSeconds();
         elapsed2 = c2.getElapsedTime().asSeconds();
-
-
+        
         Event event;
         while (window.pollEvent(event))
         {
@@ -44,7 +43,6 @@ int main(int argc, char* argv[])
                 if (isMenu)
                 {
                     mainMenu.Button(event.key.code);
-
                     if (event.key.code == Keyboard::Enter)
                         isMenu = false;
                 }
@@ -57,20 +55,19 @@ int main(int argc, char* argv[])
             mainMenu.draw(window);
         else
         {
+            window.setView(view);
             player.UpdateProjectiles(enemy1);
             
-
             for (auto& enemy : enemy1)
             {
-                enemy.EnemyMove(player.tail.getPosition());
+                enemy.EnemyMove(player.playerSprite.getPosition());
                 enemy.EnemyDraw(window);
             }
-            window.setView(view);
             player.PlayerMove();
             player.PlayerDraw(window, view);
             player.PlayerAttack(elapsed, c);
 
-            if (elapsed2 >= 2)
+            if (elapsed2 >=1)
             {
                 enemy1.push_back(Enemy(view));
                 c2.restart();
