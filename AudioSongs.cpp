@@ -27,7 +27,6 @@ void AudioSongs::Update()
 {
     if (sounds[currentSongIndex].getStatus() == Sound::Stopped)
     {
-        // The current song has finished playing, start the next one
         currentSongIndex = (currentSongIndex + 1) % sounds.size();
         sounds[currentSongIndex].play();
     }

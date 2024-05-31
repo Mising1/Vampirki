@@ -12,11 +12,14 @@ class Player
 private:
     vector<Projectile> listProjectile;
     char direction = 'r';
-    RectangleShape gun;
+    Sprite bow;
     vector<Enemy> enemies;
+    Texture playerTextureR;
+    Texture playerTextureL;
+    Texture bowTexture;
 
 public:
-    CircleShape tail;
+    Sprite playerSprite;
     float x = 50;
     int level = 1;
     float health = 100;

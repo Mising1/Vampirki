@@ -24,7 +24,6 @@ void UI::GunReload()
     gunReloadBackground.setFillColor(Color::Green);
 }
 
-
 void UI::Level()
 {
     font.loadFromFile("./font/lakes.ttf");
@@ -32,20 +31,20 @@ void UI::Level()
     text.setString("Level: " + to_string(player.level));
     text.setCharacterSize(24);
     text.setFillColor(Color::White);
-    
 }
 
 void UI::Draw(RenderWindow& window, View view, float elapsed)
 {
-    if (elapsed / player.attackSpeed * 100 > 100)
+    float reloadPercentage = elapsed / player.attackSpeed * 100;
+    if (reloadPercentage > 100)
     {
         gunReloadBar.setSize(Vector2f(100, 20));
     }
     else
     {
-        gunReloadBar.setSize(Vector2f(elapsed / player.attackSpeed * 100, 20));
+        gunReloadBar.setSize(Vector2f(reloadPercentage, 20));
     }
-    
+
     hpBar.setPosition(view.getCenter().x - 780, view.getCenter().y - 425);
     gunReloadBar.setPosition(view.getCenter().x - 780, view.getCenter().y - 400);
     hpBar.setSize(Vector2f(player.health, 20));
@@ -53,13 +52,11 @@ void UI::Draw(RenderWindow& window, View view, float elapsed)
     gunReloadBackground.setPosition(view.getCenter().x - 780, view.getCenter().y - 400);
     text.setString("Level: " + to_string(player.level));
     text.setPosition(view.getCenter().x + 650, view.getCenter().y - 425);
-    
-    
+
+
     window.draw(hpBarBackground);
     window.draw(hpBar);
     window.draw(text);
     window.draw(gunReloadBackground);
     window.draw(gunReloadBar);
 }
-
-
