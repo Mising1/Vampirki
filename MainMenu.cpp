@@ -17,7 +17,7 @@ MainMenu::MainMenu(int wX, int wY)
         menu[i].setFont(font);
         menu[i].setCharacterSize(60);
         menu[i].setFillColor(Color::White);
-        menu[i].setPosition((wX / 2) - 60, 100 + i * wY / 3);
+        menu[i].setPosition((1600 / 2) - 60, 100 + i * 900 / 3);
     }
 }
 

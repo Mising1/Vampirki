@@ -17,6 +17,23 @@ Player::Player()
     bow.setPosition(playerSprite.getPosition().x + 45, playerSprite.getPosition().y + 25);
 }
 
+void Player::PlayerInit(vector<Enemy> &enemies)
+{
+    
+    level = 1;
+    health = 100;
+    attackSpeed = 0.6f;
+    speedPlayer = 0.05f;
+    
+    listProjectile.clear();
+    
+    for(int i = 0; i < enemies.size(); i++)
+    {
+        enemies[i].enemylistProjectile.clear();
+    }
+    enemies.clear();
+}
+
 void Player::PlayerMove()
 {
     Vector2f movementPlayer;
@@ -29,8 +46,11 @@ void Player::PlayerMove()
     if (Keyboard::isKeyPressed(Keyboard::S))
     {
         movementPlayer.y += speedPlayer;
-        
     }
+    // if(Keyboard::isKeyPressed(Keyboard::Space))
+    // {
+    //     cout<<direction<<endl;
+    // }
     if (Keyboard::isKeyPressed(Keyboard::A))
     {
         bow.setRotation(180);
@@ -46,22 +66,26 @@ void Player::PlayerMove()
     if (Keyboard::isKeyPressed(Keyboard::Up))
     {
         bow.setRotation(-90);
-        direction = 'w';
+        if(direction != 'w')
+            direction = 'w';
     }
     if (Keyboard::isKeyPressed(Keyboard::Down))
     {
         bow.setRotation(90);
-        direction = 's';
+        if(direction != 's')
+            direction = 's';
     }
     if (Keyboard::isKeyPressed(Keyboard::Left))
     {
         bow.setRotation(180);
-        direction = 'a';
+        if(direction != 'a')
+            direction = 'a';
     }
     if (Keyboard::isKeyPressed(Keyboard::Right))
     {
         bow.setRotation(0);
-        direction = 'd';
+        if(direction != 'd')
+            direction = 'd';
     }
     playerSprite.move(movementPlayer);
     bow.move(movementPlayer);
@@ -152,6 +176,16 @@ void Player::PlayerDraw(RenderWindow& window, View& view)
     view.setCenter(playerSprite.getPosition().x + 25, playerSprite.getPosition().y + 25);
 }
 
+bool Player::Hit(Projectile& projectile)
+{
+    if (projectile.x >= playerSprite.getPosition().x + 5 && projectile.x <= playerSprite.getPosition().x + playerSprite.getGlobalBounds().width &&
+        projectile.y >= playerSprite.getPosition().y && projectile.y <= playerSprite.getPosition().y + playerSprite.getGlobalBounds().height)
+    {
+        return true;
+    }
+    return false;
+}
+
 void Player::UpdateProjectiles(vector<Enemy>& enemies)
 {
     for (int i = 0; i < listProjectile.size(); i++)
@@ -174,10 +208,31 @@ void Player::UpdateProjectiles(vector<Enemy>& enemies)
                 break;
             }
         }
-
         if (i < listProjectile.size())
         {
             listProjectile[i].Update();
+        }
+    }
+    for(int i = 0; i < enemies.size(); i++)
+    {
+        for(int j = 0; j < enemies[i].enemylistProjectile.size(); j++)
+        {
+            if(enemies[i].enemylistProjectile[j].CheckDistance())
+            {
+                enemies[i].enemylistProjectile.erase(enemies[i].enemylistProjectile.begin() + j);
+                j--;
+                continue;
+            }
+            if(Hit(enemies[i].enemylistProjectile[j]))
+            {
+                health-=10;
+                enemies[i].enemylistProjectile.erase(enemies[i].enemylistProjectile.begin() + j);
+                j--;
+            }
+            if(j < enemies[i].enemylistProjectile.size())
+            {
+                enemies[i].enemylistProjectile[j].Update();
+            }
         }
     }
 }
