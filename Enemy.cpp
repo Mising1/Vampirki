@@ -1,5 +1,5 @@
 ﻿#include "Enemy.h"
-
+#include <iostream>
 using namespace std;
 
 Enemy::Enemy(View view)
@@ -24,6 +24,11 @@ void Enemy::EnemyMove(Vector2f target)
 
 void Enemy::EnemyDraw(RenderWindow& window)
 {
+    for (int i = 0; i < enemylistProjectile.size(); i++)
+    {
+        enemylistProjectile[i].Update();
+        enemylistProjectile[i].Draw(window);
+    }
     enemy.setTexture(enemyTexture);
     window.draw(enemy);
 }
@@ -36,4 +41,19 @@ bool Enemy::Hit(Projectile& projectile)
         return true;
     }
     return false;
+}
+
+void Enemy::EnemyShoot(float elapsed, Clock& c)
+{
+    if (elapsed > attackSpeed)
+    {
+        char dir[4] = {'w', 's', 'a', 'd'};
+        char direction = dir[rand() % 4];
+        float projectileX = x + 25;
+        float projectileY = y + 25;
+        
+        Projectile projectile(projectileX, projectileY, direction);
+        enemylistProjectile.push_back(projectile);
+        c.restart();
+    }
 }

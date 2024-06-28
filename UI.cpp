@@ -14,14 +14,17 @@ void UI::HPBar()
 {
     hpBar.setFillColor(Color::Red);
     hpBarBackground.setSize(Vector2f(100, 20));
-    hpBarBackground.setFillColor(Color::White);
+    hpBarBackground.setOutlineThickness(2);
+    hpBarBackground.setFillColor(Color::Transparent);
+    hpBarBackground.setOutlineColor(Color::White);
 }
 
 void UI::GunReload()
 {
-    gunReloadBar.setFillColor(Color::White);
+    gunReloadBar.setFillColor(Color::Green);
     gunReloadBackground.setSize(Vector2f(100, 20));
-    gunReloadBackground.setFillColor(Color::Green);
+    gunReloadBackground.setOutlineThickness(2);
+    gunReloadBackground.setFillColor(Color::Transparent);
 }
 
 void UI::Level()
@@ -46,10 +49,10 @@ void UI::Draw(RenderWindow& window, View view, float elapsed)
     }
 
     hpBar.setPosition(view.getCenter().x - 780, view.getCenter().y - 425);
-    gunReloadBar.setPosition(view.getCenter().x - 780, view.getCenter().y - 400);
+    gunReloadBar.setPosition(view.getCenter().x - 780, view.getCenter().y - 395);
     hpBar.setSize(Vector2f(player.health, 20));
     hpBarBackground.setPosition(view.getCenter().x - 780, view.getCenter().y - 425);
-    gunReloadBackground.setPosition(view.getCenter().x - 780, view.getCenter().y - 400);
+    gunReloadBackground.setPosition(view.getCenter().x - 780, view.getCenter().y - 395);
     text.setString("Level: " + to_string(player.level));
     text.setPosition(view.getCenter().x + 650, view.getCenter().y - 425);
 
