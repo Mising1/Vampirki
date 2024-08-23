@@ -10,7 +10,7 @@ using namespace sf;
 
 int main(int argc, char* argv[])
 {
-    vector<string> songPaths = {"./audio/NeonAbyss.mp3", "./audio/FutureFrenzy.mp3"};
+    vector<string> songPaths = { "./audio/FutureFrenzy.mp3", "./audio/NeonAbyss.mp3"};
     AudioSongs audioSongs(songPaths);
 
     const int width = 1600;
@@ -24,6 +24,7 @@ int main(int argc, char* argv[])
     Clock player_clock;
     Clock spawnClock;
     Clock enemy_clock;
+    
 
     bool isMenu = true;
     float player_attacks, spawn_rate, enemy_elapsed;
@@ -33,8 +34,8 @@ int main(int argc, char* argv[])
         audioSongs.Update();
         player_attacks = player_clock.getElapsedTime().asSeconds();
         spawn_rate = spawnClock.getElapsedTime().asSeconds();
-        enemy_elapsed = enemy_clock.getElapsedTime().asSeconds();
-
+       // enemy_elapsed = enemy_clock.getElapsedTime().asSeconds();
+    
         Event event;
         while (window.pollEvent(event))
         {
@@ -75,7 +76,7 @@ int main(int argc, char* argv[])
             {
                 enemy.EnemyMove(player.playerSprite.getPosition());
                 enemy.EnemyDraw(window);
-                enemy.EnemyShoot(enemy_elapsed, enemy_clock);
+                enemy.EnemyShoot();
             }
             player.PlayerMove();
             player.PlayerDraw(window, view);

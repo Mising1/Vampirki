@@ -11,6 +11,8 @@ private:
     Texture enemyTexture;
     RectangleShape enemyHitbox;
 
+    float elapsedAttack = 0;
+    Clock clock;
 public:
     vector<Projectile> enemylistProjectile;
     float x;
@@ -23,6 +25,6 @@ public:
     void EnemyMove(Vector2f target); 
     bool Hit(Projectile& projectile);
     void EnemyDraw(RenderWindow& window);
-    void EnemyShoot(float elapsed, Clock& c);
+    void EnemyShoot();
     
 };

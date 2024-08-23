@@ -9,6 +9,7 @@ Enemy::Enemy(View view)
     this->y = rand() % int(view.getSize().y - (-view.getSize().y)) + (-view.getSize().y);
     enemy.scale(0.5f, 0.5f);
     enemy.setPosition(x, y);
+    
 }
 
 void Enemy::EnemyMove(Vector2f target)
@@ -43,9 +44,10 @@ bool Enemy::Hit(Projectile& projectile)
     return false;
 }
 
-void Enemy::EnemyShoot(float elapsed, Clock& c)
+void Enemy::EnemyShoot()
 {
-    if (elapsed > attackSpeed)
+    elapsedAttack = clock.getElapsedTime().asSeconds();
+    if (elapsedAttack > attackSpeed)
     {
         char dir[4] = {'w', 's', 'a', 'd'};
         char direction = dir[rand() % 4];
@@ -54,6 +56,6 @@ void Enemy::EnemyShoot(float elapsed, Clock& c)
         
         Projectile projectile(projectileX, projectileY, direction);
         enemylistProjectile.push_back(projectile);
-        c.restart();
+        clock.restart();
     }
 }
