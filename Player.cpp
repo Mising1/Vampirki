@@ -202,6 +202,8 @@ void Player::UpdateProjectiles(vector<Enemy>& enemies)
             if (enemies[j].Hit(listProjectile[i]))
             {
                 level++;
+                attackSpeed -= 0.01f;
+                speedPlayer += 0.001f;
                 listProjectile.erase(listProjectile.begin() + i);
                 enemies.erase(enemies.begin() + j);
                 i--;
